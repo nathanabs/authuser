@@ -12,8 +12,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.ead.authuser.constants.AppConstants.Banco.PADRAO_DATA;
 import static com.ead.authuser.constants.AppConstants.Banco.TABELA_AUTH_USER;
+import static com.ead.authuser.constants.AppConstants.Data.PADRAO_DATA;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)

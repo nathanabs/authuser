@@ -58,6 +58,6 @@ public class UserController {
 
         return ResponseEntity
                 .status(OK)
-                .body("User deleted success");
+                .body("User deleted successfully.");
     }
 }
