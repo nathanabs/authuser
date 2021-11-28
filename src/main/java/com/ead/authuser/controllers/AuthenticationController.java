@@ -1,11 +1,12 @@
 package com.ead.authuser.controllers;
 
 import com.ead.authuser.dtos.UserDto;
+import com.ead.authuser.dtos.UserDto.UserView.RegistrationPost;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.service.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Object> registerUser(@RequestBody @JsonView(RegistrationPost.class)
+                                                           UserDto userDto){
 
         if (userService.existByUsername(userDto.getUsername())){
             return ResponseEntity

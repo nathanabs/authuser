@@ -20,6 +20,7 @@ import static com.ead.authuser.constants.AppConstants.Data.PADRAO_DATA;
 @Entity
 @Table(name = TABELA_AUTH_USER)
 public class UserModel implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
