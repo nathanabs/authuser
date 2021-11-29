@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -29,8 +30,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@RequestBody @JsonView(RegistrationPost.class)
-                                                           UserDto userDto){
+    public ResponseEntity<Object> registerUser(@RequestBody @Validated(RegistrationPost.class)
+                                                   @JsonView(RegistrationPost.class) UserDto userDto){
 
         if (userService.existByUsername(userDto.getUsername())){
             return ResponseEntity
