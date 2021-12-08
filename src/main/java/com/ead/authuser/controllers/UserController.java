@@ -7,6 +7,7 @@ import com.ead.authuser.dtos.UserDto.UserView.PasswordPut;
 import com.ead.authuser.dtos.UserDto.UserView.UserPut;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.service.UserService;
+import com.ead.authuser.specification.SpecificationTemplate;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,10 +35,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<Page<UserModel>> getAllUser(@PageableDefault(page = 0, size = 10, sort = "userId", direction = ASC)
-                                                                  Pageable pageable){
+    public ResponseEntity<Page<UserModel>> getAllUser(SpecificationTemplate.UserSpec spec,
+            @PageableDefault(page = 0, size = 10, sort = "userId", direction = ASC) Pageable pageable){
 
-        Page<UserModel> userModelPage = userService.findAll(pageable);
+        Page<UserModel> userModelPage = userService.findAll(pageable, spec);
 
         return ResponseEntity
                 .status(OK)
