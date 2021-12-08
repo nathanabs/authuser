@@ -24,6 +24,8 @@ import java.util.UUID;
 
 import static com.ead.authuser.constants.AppConstants.Controller.USERS;
 import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
@@ -39,6 +41,11 @@ public class UserController {
             @PageableDefault(page = 0, size = 10, sort = "userId", direction = ASC) Pageable pageable){
 
         Page<UserModel> userModelPage = userService.findAll(pageable, spec);
+
+        if (!userModelPage.isEmpty()){
+            userModelPage.toList().forEach(user ->
+                    user.add(linkTo(methodOn(UserController.class).getOneUser(user.getUserId())).withSelfRel()));
+        }
 
         return ResponseEntity
                 .status(OK)
