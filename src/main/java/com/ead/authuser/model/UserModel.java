@@ -3,6 +3,7 @@ package com.ead.authuser.model;
 import com.ead.authuser.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "TB_USERS")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserModel implements Serializable {
 
     @Id
