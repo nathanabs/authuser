@@ -1,5 +1,6 @@
 package com.ead.authuser.service;
 
+import com.ead.authuser.dto.UserDto;
 import com.ead.authuser.model.UserModel;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface UserService {
 
     boolean existByUsername(String username);
     boolean existByEmail(String email);
+
+    UserModel updateUser(UserModel userModel, UserDto userDto);
+
+    void updatePassword(UserModel userModel, UserDto userDto);
+
+    UserModel updateImage(UserModel userModel, String imageUrl);
 }

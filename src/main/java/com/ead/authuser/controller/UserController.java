@@ -1,7 +1,9 @@
 package com.ead.authuser.controller;
 
+import com.ead.authuser.dto.UserDto;
 import com.ead.authuser.model.UserModel;
 import com.ead.authuser.service.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +44,48 @@ public class UserController {
 
         service.delete(userOptional.get());
         return ResponseEntity.ok("User deleted successfuly");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable(value = "id") UUID id,
+                                             @RequestBody @JsonView(UserDto.UserView.UserPut.class) UserDto userDto){
+        Optional<UserModel> userOptional = service.findOne(id);
+
+        if (userOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        var response = service.updateUser(userOptional.get(), userDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<Object> updatePassword(@PathVariable(value = "id") UUID id,
+                                                 @RequestBody @JsonView(UserDto.UserView.PasswordPut.class) UserDto userDto){
+        Optional<UserModel> userOptional = service.findOne(id);
+
+        if (userOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        if (!userOptional.get().getPassword().equals(userDto.getOldPassword())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Mismatched old password ");
+        }
+
+        service.updatePassword(userOptional.get(), userDto);
+        return ResponseEntity.ok("Password updated successfully");
+    }
+
+    @PutMapping("/{id}/image")
+    public ResponseEntity<Object> updateImage(@PathVariable(value = "id") UUID id,
+                                              @RequestBody @JsonView(UserDto.UserView.ImagePut.class) UserDto userDto){
+        Optional<UserModel> userOptional = service.findOne(id);
+
+        if (userOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        var response = service.updateImage(userOptional.get(), userDto.getImageUrl());
+        return ResponseEntity.ok(response);
     }
 }
