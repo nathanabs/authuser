@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +49,8 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(value = "id") UUID id,
-                                             @RequestBody @JsonView(UserDto.UserView.UserPut.class) UserDto userDto){
+                                             @RequestBody @Validated(UserDto.UserView.UserPut.class)
+                                             @JsonView(UserDto.UserView.UserPut.class) UserDto userDto){
         Optional<UserModel> userOptional = service.findOne(id);
 
         if (userOptional.isEmpty()){
@@ -61,7 +63,8 @@ public class UserController {
 
     @PutMapping("/{id}/password")
     public ResponseEntity<Object> updatePassword(@PathVariable(value = "id") UUID id,
-                                                 @RequestBody @JsonView(UserDto.UserView.PasswordPut.class) UserDto userDto){
+                                                 @RequestBody @Validated(UserDto.UserView.PasswordPut.class)
+                                                 @JsonView(UserDto.UserView.PasswordPut.class) UserDto userDto){
         Optional<UserModel> userOptional = service.findOne(id);
 
         if (userOptional.isEmpty()){
@@ -78,7 +81,8 @@ public class UserController {
 
     @PutMapping("/{id}/image")
     public ResponseEntity<Object> updateImage(@PathVariable(value = "id") UUID id,
-                                              @RequestBody @JsonView(UserDto.UserView.ImagePut.class) UserDto userDto){
+                                              @RequestBody @Validated(UserDto.UserView.ImagePut.class)
+                                              @JsonView(UserDto.UserView.ImagePut.class) UserDto userDto){
         Optional<UserModel> userOptional = service.findOne(id);
 
         if (userOptional.isEmpty()){
