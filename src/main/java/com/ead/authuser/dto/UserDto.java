@@ -1,5 +1,6 @@
 package com.ead.authuser.dto;
 
+import com.ead.authuser.validation.UsernameConstraint;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.constraints.Email;
@@ -25,11 +26,12 @@ public class UserDto {
 
     @NotBlank(groups = UserView.RegistrationPost.class)
     @JsonView(UserView.RegistrationPost.class)
-    @Size(min = 4, max = 50)
+    @Size(min = 4, max = 50, groups = UserView.RegistrationPost.class)
+    @UsernameConstraint(groups = UserView.RegistrationPost.class)
     private String username;
 
     @NotBlank(groups = UserView.RegistrationPost.class)
-    @Email
+    @Email(groups = UserView.RegistrationPost.class)
     @JsonView(UserView.RegistrationPost.class)
     private String email;
 
