@@ -5,6 +5,10 @@ import com.ead.authuser.model.UserModel;
 import com.ead.authuser.service.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,8 +27,10 @@ public class UserController {
     private final UserService service;
 
     @GetMapping
-    public ResponseEntity<List<UserModel>> getAllUser(){
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<Page<UserModel>> getAllUser(@PageableDefault(
+            page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<UserModel> userModelPage = service.findAll(pageable);
+        return ResponseEntity.ok(userModelPage);
     }
 
     @GetMapping("/{id}")
