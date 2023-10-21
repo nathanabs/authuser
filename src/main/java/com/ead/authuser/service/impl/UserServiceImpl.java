@@ -4,6 +4,7 @@ import com.ead.authuser.dto.UserDto;
 import com.ead.authuser.model.UserModel;
 import com.ead.authuser.repository.UserRepository;
 import com.ead.authuser.service.UserService;
+import com.ead.authuser.specifications.SpecificationTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserModel> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<UserModel> findAll(Pageable pageable, SpecificationTemplate.UserSpec spec) {
+        return repository.findAll(spec, pageable);
     }
 }

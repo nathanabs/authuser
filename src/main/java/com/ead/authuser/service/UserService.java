@@ -2,6 +2,7 @@ package com.ead.authuser.service;
 
 import com.ead.authuser.dto.UserDto;
 import com.ead.authuser.model.UserModel;
+import com.ead.authuser.specifications.SpecificationTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,5 +28,5 @@ public interface UserService {
 
     UserModel updateImage(UserModel userModel, String imageUrl);
 
-    Page<UserModel> findAll(Pageable pageable);
+    Page<UserModel> findAll(Pageable pageable, SpecificationTemplate.UserSpec spec);
 }
