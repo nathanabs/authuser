@@ -7,6 +7,8 @@ import com.ead.authuser.model.UserType;
 import com.ead.authuser.service.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ import java.time.ZoneId;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
+
+    Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
     private final UserService service;
 
     @PostMapping("/signup")
@@ -44,6 +48,18 @@ public class AuthenticationController {
         service.save(userModel);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userModel);
+    }
+
+    @GetMapping("/")
+    public String index(){
+
+        logger.trace("TRACE");
+        logger.info("INFO");
+        logger.warn("WARN");
+        logger.debug("DEBUG");
+        logger.error("ERROR");
+
+        return "Logging";
     }
 
 }
